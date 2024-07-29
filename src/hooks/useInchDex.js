@@ -21,7 +21,7 @@ const useInchDex = (chain) => {
       toTokenAddress: params.toToken.address, // The token you want to receive
       amount: Moralis.Units.Token(
         params.fromAmount,
-        params.fromToken.decimals
+        params.fromToken.decimals,
       ).toString(),
     });
 
@@ -29,7 +29,7 @@ const useInchDex = (chain) => {
     const { fromToken, fromAmount, chain } = params;
     const amount = Moralis.Units.Token(
       fromAmount,
-      fromToken.decimals
+      fromToken.decimals,
     ).toString();
     if (fromToken.address !== "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
       await Moralis.Plugins.oneInch
@@ -69,7 +69,7 @@ const useInchDex = (chain) => {
       toTokenAddress: params.toToken.address, // The token you want to receive
       amount: Moralis.Units.Token(
         params.fromAmount,
-        params.fromToken.decimals
+        params.fromToken.decimals,
       ).toString(),
       fromAddress: walletAddress, // Your wallet address
       slippage: 1,

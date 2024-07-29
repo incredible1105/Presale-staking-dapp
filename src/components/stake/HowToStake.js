@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import StakingGuide from './StakingGuide';
+import { useState } from "react";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import StakingGuide from "./StakingGuide";
 
 const HowToStake = () => {
   const [stakingGuideDialogOpen, setStakingGuideDialogOpen] = useState(false);
@@ -11,16 +11,16 @@ const HowToStake = () => {
   };
 
   return (
-    <Box component="div" sx={{textAlign: 'center', mt: 2, mb: 4}}>
+    <Box component="div" sx={{ textAlign: "center", mt: 2, mb: 4 }}>
       <Button onClick={handleStakingGuideDialogToggle}>
         Learn how to stake
       </Button>
-      <StakingGuide 
-        open={stakingGuideDialogOpen} 
-        handleClose={handleStakingGuideDialogToggle} 
+      <StakingGuide
+        open={stakingGuideDialogOpen}
+        handleClose={handleStakingGuideDialogToggle}
       />
     </Box>
   );
-}
- 
+};
+
 export default HowToStake;
