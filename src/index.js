@@ -4,49 +4,49 @@ import App from "./App";
 import { MoralisProvider } from "react-moralis";
 import "./index.css";
 import { MoralisDappProvider } from "./providers/MoralisDappProvider/MoralisDappProvider";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { Web3ReactProvider } from '@web3-react/core'
-import { ethers } from 'ethers'
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { Web3ReactProvider } from "@web3-react/core";
+import { ethers } from "ethers";
 
 const theme = createTheme({
   palette: {
-    mode: 'light',
+    mode: "light",
     primary: {
       //main: '#1a90ff',
-      main: '#1cac1d',
+      main: "#1cac1d",
     },
     neutral: {
-      main: '#f8f9f9',
-    }
+      main: "#f8f9f9",
+    },
   },
   typography: {
-    fontFamily: ['Poppins', 'sans-serif'].join(','),
+    fontFamily: ["Poppins", "sans-serif"].join(","),
   },
   components: {
     MuiButton: {
       styleOverrides: {
         text: {
           fontWeight: 600,
-          textTransform: 'inherit'
+          textTransform: "inherit",
         },
         contained: {
           fontWeight: 700,
-          textTransform: 'inherit',
-          borderRadius: 25
+          textTransform: "inherit",
+          borderRadius: 25,
         },
-      }
-    }
+      },
+    },
   },
 });
 
-const POLLING_INTERVAL = 12000
+const POLLING_INTERVAL = 12000;
 
 const getLibrary = (provider) => {
-  const library = new ethers.providers.Web3Provider(provider)
-  library.pollingInterval = POLLING_INTERVAL
-  return library
-}
+  const library = new ethers.providers.Web3Provider(provider);
+  library.pollingInterval = POLLING_INTERVAL;
+  return library;
+};
 
 // const APP_ID = process.env.REACT_APP_MORALIS_APPLICATION_ID;
 // const SERVER_URL = process.env.REACT_APP_MORALIS_SERVER_URL;
@@ -64,8 +64,8 @@ const Application = () => {
             <CssBaseline />
             <App />
           </ThemeProvider>
-          </MoralisDappProvider>
-      </Web3ReactProvider>  
+        </MoralisDappProvider>
+      </Web3ReactProvider>
     </MoralisProvider>
   );
 };
@@ -74,5 +74,5 @@ ReactDOM.render(
   // <React.StrictMode>
   <Application />,
   // </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );

@@ -8,19 +8,21 @@ export const useERC20Balance = (params) => {
   const { walletAddress, chainId } = useMoralisDapp();
 
   const [assets, setAssets] = useState();
-  
+
   useEffect(() => {
     if (isInitialized) {
-      fetchERC20Balance()
-        .then((balance) => setAssets(balance))
+      fetchERC20Balance().then((balance) => setAssets(balance));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isInitialized, chainId, walletAddress]);
 
   const fetchERC20Balance = async () => {
     return await account
-      .getTokenBalances({ address: walletAddress, chain: params?.chain || chainId })
-      .then((result) => result)
+      .getTokenBalances({
+        address: walletAddress,
+        chain: params?.chain || chainId,
+      })
+      .then((result) => result);
   };
 
   return { fetchERC20Balance, assets };
