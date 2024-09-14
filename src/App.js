@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { useWeb3React } from '@web3-react/core';
+import { useWeb3React } from "@web3-react/core";
 import ERC20Balance from "components/ERC20Balance";
 import Home from "containers/home";
 import About from "containers/about";
@@ -9,7 +9,7 @@ import Transactions from "containers/transactions";
 import NFTs from "containers/nfts";
 import "antd/dist/antd.css";
 import Ramper from "./components/Ramper";
-import Footer from './components/layout/Footer';
+import Footer from "./components/layout/Footer";
 import MainNavigation from "components/layout/Header/MainNavigation";
 import Swap from "containers/swap";
 import Presale from "containers/pre-sale";
@@ -17,17 +17,17 @@ import Mint from "containers/mint";
 import Stake from "containers/stake";
 
 const App = () => {
-  const { library, account } = useWeb3React()
-    useEffect(() => {
-      if(library) {
-        localStorage.setItem("connected", true)
-      }
-    }, [library, account]);
+  const { library, account } = useWeb3React();
+  useEffect(() => {
+    if (library) {
+      localStorage.setItem("connected", true);
+    }
+  }, [library, account]);
 
   return (
     <BrowserRouter>
       <MainNavigation />
-      <main style={{marginTop: 90, marginBottom: 90}}>
+      <main style={{ marginTop: 90, marginBottom: 90 }}>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />

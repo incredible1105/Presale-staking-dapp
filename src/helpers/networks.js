@@ -75,7 +75,6 @@ export const networkConfigs = {
   },
 };
 
-
 export const getNativeByChain = (chain) =>
   networkConfigs[chain]?.currencySymbol || "Native";
 

@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import Chip from '@mui/material/Chip';
+import { useState, useEffect } from "react";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import Chip from "@mui/material/Chip";
 import { EthereumLogo, BinanceLogo } from "../ui/NetworkLogos";
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import { useChain, useMoralis } from "react-moralis";
 
 //main net
@@ -40,7 +40,6 @@ const menuItems = [
   },
 ];
 
-
 export default function Networks() {
   const { isAuthenticated } = useMoralis();
   const { switchNetwork, chainId } = useChain();
@@ -69,25 +68,21 @@ export default function Networks() {
 
   const handleChipIcon = () => {
     if (selected) {
-      return (<div style={{marginLeft: '5px'}}>
-        {selected.icon}
-      </div>)
+      return <div style={{ marginLeft: "5px" }}>{selected.icon}</div>;
     } else {
-      return <KeyboardArrowDownIcon />
+      return <KeyboardArrowDownIcon />;
     }
-  }
+  };
 
-  if (!isAuthenticated)
-    return null;
- 
+  if (!isAuthenticated) return null;
 
   return (
-    <div style={{minWidth: '100px', textAlign: 'right'}}>
-      <Chip 
+    <div style={{ minWidth: "100px", textAlign: "right" }}>
+      <Chip
         icon={handleChipIcon()}
-        label={selected?.symbol || "Network"} 
+        label={selected?.symbol || "Network"}
         onClick={handleClickListItem}
-        sx={{fontWeight: 500}}
+        sx={{ fontWeight: 500 }}
       />
       <Menu
         id="networks-menu"
@@ -95,16 +90,16 @@ export default function Networks() {
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          'aria-labelledby': 'lock-button',
-          role: 'listbox',
+          "aria-labelledby": "lock-button",
+          role: "listbox",
         }}
         PaperProps={{
           elevation: 0,
           sx: {
             boxShadow: "0 4px 14px 0 rgb(0 0 0 / 10%)",
-            borderRadius: '15px',
-            mt: 1
-          }
+            borderRadius: "15px",
+            mt: 1,
+          },
         }}
       >
         {menuItems.map((item) => (
@@ -113,9 +108,7 @@ export default function Networks() {
             selected={chainId === item.key}
             onClick={() => handleMenuItemClick(item)}
           >
-            <ListItemIcon>
-              {item.icon}
-            </ListItemIcon>
+            <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText>{item.value}</ListItemText>
           </MenuItem>
         ))}
