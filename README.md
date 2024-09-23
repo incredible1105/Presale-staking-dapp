@@ -19,7 +19,7 @@ Clone Repo:
 
 ```sh
 git clone https://github.com/matheusup2024/Presale.git
-cd Presale
+cd Presale-staking-dapp
 ```
 
 Install Dependencies:
