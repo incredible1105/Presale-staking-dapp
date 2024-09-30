@@ -112,27 +112,57 @@ export function useWalletConnector() {
   const [provider, setProvider] = useState({});
 
   const setupNetwork = async () => {
-    const provider = window.ethereum;
+    const provider = window.ethereum; // Get the Ethereum provider from the window object
     if (provider) {
       try {
+        // Attempt to switch to the desired network for MetaMask only
         await provider.request({
           method: "wallet_switchEthereumChain",
           params: [
             {
-              chainId: `0x${netlist[netid].chaind.toString(16)}`,
+              chainId: `0x${netlist[netid].chaind.toString(16)}`, // Convert chain ID to hexadecimal format
             },
           ],
         });
-        setProvider(provider);
-        return true;
+        setProvider(provider); // Set the provider if the switch is successful
+        return true; // Return true indicating success
       } catch (error) {
-        return false;
+        // Handle errors that occur during the network switch
+        if (error.code === 4902) { // Check if the error is due to an unrecognized chain ID
+          try {
+            // Attempt to add the network to MetaMask
+            await provider.request({
+              method: "wallet_addEthereumChain",
+              params: [
+                {
+                  chainId: `0x${netlist[netid].chaind.toString(16)}`, // Convert chain ID to hexadecimal format
+                  chainName: netlist[netid].chainname, // Name of the chain
+                  nativeCurrency: {
+                    name: netlist[netid].chainsymbol, // Name of the native currency
+                    symbol: netlist[netid].chainsymbol, // Symbol of the native currency
+                    decimals: netlist[netid].chaindecimals, // Decimals for the native currency
+                  },
+                  rpcUrls: [netlist[netid].rpcurl], // RPC URL for the network
+                  blockExplorerUrls: [netlist[netid].blockurl], // Block explorer URL for the network
+                },
+              ],
+            });
+            setProvider(provider); // Set the provider if the addition is successful
+            return true; // Return true indicating success
+          } catch (addError) {
+            console.error(addError); // Log any errors that occur while adding the network
+            return false; // Return false indicating failure
+          }
+        } else {
+          console.error(error); // Log any other errors that occur during the switch
+          return false; // Return false indicating failure
+        }
       }
     } else {
       console.error(
-        "Can't setup the Default Network network on metamask because window.ethereum is undefined",
-      );
-      return false;
+        "Can't setup the network on MetaMask because window.ethereum is undefined"
+      ); // Log an error if the provider is not available
+      return false; // Return false indicating failure
     }
   };
 
@@ -141,7 +171,13 @@ export function useWalletConnector() {
   };
 
   const loginWalletConnect = async () => {
-    loginWallet(walletconnect);
+    // Check if the selected network is supported by WalletConnect
+    const isSupportedNetwork = netlist.some(net => net.chaind === netlist[netid].chaind);
+    if (!isSupportedNetwork) {
+      console.error("Selected network is not supported by WalletConnect.");
+      return; // Handle unsupported network case
+    }
+    loginWallet(walletconnect); // Proceed to login with WalletConnect
   };
 
   const loginBSC = async () => {
@@ -164,7 +200,7 @@ export function useWalletConnector() {
             error instanceof UserRejectedRequestErrorWalletConnect
           ) {
             console.log(
-              "Authorization Error! Please authorize to access your account",
+              "Authorization Error! Please authorize to access your account"
             );
           } else {
             console.log(error.name + error.message);
