@@ -86,7 +86,7 @@ export function getDefaultProvider() {
   if (!provider) {
     provider = new ethers.providers.Web3Provider(
       web3ProviderFrom(netlist[netid].rpcurl),
-      netlist[netid].chaind,
+      netlist[netid].chaind
     );
   }
 
@@ -126,11 +126,33 @@ export function useWalletConnector() {
         setProvider(provider);
         return true;
       } catch (error) {
+        console.error(error);
+        if (error.code === 4902) {
+          try {
+            await provider.request({
+              method: "wallet_addEthereumChain",
+              params: [
+                {
+                  chainId: `0x${netlist[netid].chaind.toString(16)}`,
+                  chainName: netlist[netid].chainname,
+                  rpcUrls: [netlist[netid].rpcurl],
+                  nativeCurrency: {
+                    name: netlist[netid].chainsymbol,
+                    symbol: netlist[netid].chainsymbol,
+                    decimals: netlist[netid].chaindecimals,
+                  },
+                },
+              ],
+            });
+          } catch (addError) {
+            console.error(addError);
+          }
+        }
         return false;
       }
     } else {
       console.error(
-        "Can't setup the Default Network network on metamask because window.ethereum is undefined",
+        "Can't setup the Default Network network on metamask because window.ethereum is undefined"
       );
       return false;
     }
@@ -164,7 +186,7 @@ export function useWalletConnector() {
             error instanceof UserRejectedRequestErrorWalletConnect
           ) {
             console.log(
-              "Authorization Error! Please authorize to access your account",
+              "Authorization Error! Please authorize to access your account"
             );
           } else {
             console.log(error.name + error.message);

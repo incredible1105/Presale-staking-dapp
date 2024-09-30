@@ -75,31 +75,39 @@ const NetworkWalletProviders = ({
   };
 
   const connectWallet = async (walletprovider) => {
-    localStorage.setItem("connected", true);
+    let isConnected = false;
 
     switch (walletprovider) {
       case "injected_eth":
         setWalletProvider("injected_eth");
         setNet(0);
         loginMetamask();
+        isConnected = true;
         break;
       case "walletconnect_eth":
         setWalletProvider("walletconnect_eth");
         setNet(0);
         loginWalletConnect();
+        isConnected = true;
         break;
       case "injected_bsc":
         setWalletProvider("injected_bsc");
         setNet(1);
         loginMetamask();
+        isConnected = true;
         break;
       case "walletconnect_bsc":
         setWalletProvider("walletconnect_bsc");
         setNet(1);
         loginWalletConnect();
+        isConnected = true;
         break;
       default:
         return null;
+    }
+
+    if (isConnected) {
+      localStorage.setItem("connected", true);
     }
   };
 
